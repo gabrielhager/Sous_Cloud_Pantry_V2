@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Sous_Cloud_Pantry_V2.models.Recipe>
+
+@{
+    ViewData["Title"] = "Menu Items";
+}
+
+<h1>Details</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IngredientList)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IngredientList)
+            </td>
+            <td>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Details">Details</a>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="item.RecipeId">Details</a>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="Model.RecipeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

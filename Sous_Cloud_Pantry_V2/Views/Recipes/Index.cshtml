@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Sous_Cloud_Pantry_V2.models.Recipe>
+
+@{
+    ViewData["Title"] = "My Menu";
+}
+
+<h1>My Menu</h1>
+
+<p>
+   <center> <a asp-action="Create">Create New</a> </center> 
+</p>
+<table class="table">
+    
+@foreach (var item in Model.Select(r => new { r.Title }).Distinct()) {
+        <tr>
+            <div class="card shadow col-xs-6 col-sm-5 col-md-4 col-lg-3" style="margin: auto">
+                <p class="card-header" style="margin: auto">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </p>
+                <p>
+                    <a asp-action="Details" asp-route-id="@item.Title"><center>Details</center></a>
+                </p>
+            </div>
+            <p></p>
+        </tr>
+}
+</table>
