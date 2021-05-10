@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>My Pantry</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"> Add Item +</a>
 </p>
 <table class="table">
     <thead>
@@ -15,16 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.IngredientName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpiryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Measurement)
-            </th>
-            <th></th>
+
+          
+            
         </tr>
     </thead>
     <tbody>
@@ -33,15 +26,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IngredientName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpiryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Measurement.MeasurementId)
-            </td>
+           
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IngredientId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IngredientId">Details</a> |

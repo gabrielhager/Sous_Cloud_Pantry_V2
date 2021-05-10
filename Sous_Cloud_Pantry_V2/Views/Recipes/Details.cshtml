@@ -4,18 +4,15 @@
     ViewData["Title"] = "Menu Items";
 }
 
-<h1>Details</h1>
+<h1>@Model.ToArray()[0].Title</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Ingredient List:
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IngredientList)
-            </th>
-
+            
             <th></th>
         </tr>
     </thead>
@@ -24,13 +21,7 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IngredientList)
-            </td>
-            <td>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="Details">Details</a>
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="item.RecipeId">Details</a>
