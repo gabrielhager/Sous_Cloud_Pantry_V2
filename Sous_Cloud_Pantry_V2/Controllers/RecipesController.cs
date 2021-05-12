@@ -23,27 +23,48 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // GET: Recipes
         public async Task<IActionResult> Index()
         {
-            var sousKitchenPantryDBContext = _context.Recipes.Include(r => r.IngredientListNavigation);
+            var currentUser = from u in _context.Recipes
+                              where u.UserName == User.Identity.Name
+                              select u;
 
-            return View(await sousKitchenPantryDBContext.ToListAsync());
+            return View(await currentUser.ToListAsync());
+            //return View(await _context.Recipes.ToListAsync());
         }
 
         // GET: Recipes/Details/5
-        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var recipe = await _context.Recipes
+            //    .FirstOrDefaultAsync(m => m.RecipeId == id);
+            //if (recipe == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(recipe);
             var recipe = from r in _context.Recipes
                          where r.Title == id
                          select r;
-
             return View(recipe);
         }
 
         // GET: Recipes/Create
         public IActionResult Create()
         {
-            ViewData["IngredientList"] = new SelectList(_context.GroceryLists, "ListItem", "ListItem");
+            return View();
+        }
+
+        public IActionResult Add(string id)
+        {
+          var currentRecipe = from u in _context.Recipes
+                              where u.Title == id
+                              select u;
+
             return View();
         }
 
@@ -52,7 +73,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RecipeId,Title,IngredientList")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("RecipeId,Title,IngredientList,UserName")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
@@ -60,9 +81,10 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IngredientList"] = new SelectList(_context.GroceryLists, "ListItem", "ListItem", recipe.IngredientList);
             return View(recipe);
         }
+
+        
 
         // GET: Recipes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -77,7 +99,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             {
                 return NotFound();
             }
-            ViewData["IngredientList"] = new SelectList(_context.GroceryLists, "ListItem", "ListItem", recipe.IngredientList);
             return View(recipe);
         }
 
@@ -86,7 +107,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RecipeId,Title,IngredientList")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("RecipeId,Title,IngredientList,UserName")] Recipe recipe)
         {
             if (id != recipe.RecipeId)
             {
@@ -113,7 +134,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IngredientList"] = new SelectList(_context.GroceryLists, "ListItem", "ListItem", recipe.IngredientList);
             return View(recipe);
         }
 
@@ -126,7 +146,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             }
 
             var recipe = await _context.Recipes
-                .Include(r => r.IngredientListNavigation)
                 .FirstOrDefaultAsync(m => m.RecipeId == id);
             if (recipe == null)
             {

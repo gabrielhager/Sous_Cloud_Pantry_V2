@@ -23,12 +23,16 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // GET: GroceryLists
         public async Task<IActionResult> Index()
         {
-            var sousKitchenPantryDBContext = _context.GroceryLists.Include(g => g.User);
-            return View(await sousKitchenPantryDBContext.ToListAsync());
+            var currentUser = from u in _context.GroceryLists
+                              where u.UserName == User.Identity.Name
+                              select u;
+
+            return View(await currentUser.ToListAsync());
+            //return View(await _context.GroceryLists.ToListAsync());
         }
 
         // GET: GroceryLists/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -36,8 +40,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             }
 
             var groceryList = await _context.GroceryLists
-                .Include(g => g.User)
-                .FirstOrDefaultAsync(m => m.ListItem == id);
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (groceryList == null)
             {
                 return NotFound();
@@ -49,7 +52,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // GET: GroceryLists/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.UserTables, "UserId", "UserId");
             return View();
         }
 
@@ -58,7 +60,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,ListItem")] GroceryList groceryList)
+        public async Task<IActionResult> Create([Bind("UserId,ListItem,UserName")] GroceryList groceryList)
         {
             if (ModelState.IsValid)
             {
@@ -66,12 +68,11 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserTables, "UserId", "UserId", groceryList.UserId);
             return View(groceryList);
         }
 
         // GET: GroceryLists/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -83,7 +84,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.UserTables, "UserId", "UserId", groceryList.UserId);
             return View(groceryList);
         }
 
@@ -92,9 +92,9 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserId,ListItem")] GroceryList groceryList)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,ListItem,UserName")] GroceryList groceryList)
         {
-            if (id != groceryList.ListItem)
+            if (id != groceryList.UserId)
             {
                 return NotFound();
             }
@@ -108,7 +108,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GroceryListExists(groceryList.ListItem))
+                    if (!GroceryListExists(groceryList.UserId))
                     {
                         return NotFound();
                     }
@@ -119,12 +119,11 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserTables, "UserId", "UserId", groceryList.UserId);
             return View(groceryList);
         }
 
         // GET: GroceryLists/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -132,8 +131,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             }
 
             var groceryList = await _context.GroceryLists
-                .Include(g => g.User)
-                .FirstOrDefaultAsync(m => m.ListItem == id);
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (groceryList == null)
             {
                 return NotFound();
@@ -145,7 +143,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // POST: GroceryLists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var groceryList = await _context.GroceryLists.FindAsync(id);
             _context.GroceryLists.Remove(groceryList);
@@ -153,9 +151,9 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GroceryListExists(string id)
+        private bool GroceryListExists(int id)
         {
-            return _context.GroceryLists.Any(e => e.ListItem == id);
+            return _context.GroceryLists.Any(e => e.UserId == id);
         }
     }
 }

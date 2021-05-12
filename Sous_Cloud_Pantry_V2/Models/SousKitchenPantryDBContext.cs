@@ -17,13 +17,16 @@ namespace Sous_Cloud_Pantry_V2.models
         {
         }
 
-        public virtual DbSet<Calendar> Calendars { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<GroceryList> GroceryLists { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
-        public virtual DbSet<Measurement> Measurements { get; set; }
-        public virtual DbSet<Pantry> Pantries { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
-        public virtual DbSet<UserTable> UserTables { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,35 +41,113 @@ namespace Sous_Cloud_Pantry_V2.models
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<Calendar>(entity =>
+            modelBuilder.Entity<AspNetRole>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedName] IS NOT NULL)");
 
-                entity.ToTable("Calendar");
+                entity.Property(e => e.Name).HasMaxLength(256);
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetRoleClaim>(entity =>
+            {
+                entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
+
+                entity.Property(e => e.RoleId).IsRequired();
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetRoleClaims)
+                    .HasForeignKey(d => d.RoleId);
+            });
+
+            modelBuilder.Entity<AspNetUser>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
+
+                entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
+                entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
+
+                entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetUserClaim>(entity =>
+            {
+                entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
+
+                entity.Property(e => e.UserId).IsRequired();
 
                 entity.HasOne(d => d.User)
-                    .WithMany()
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Calendar__UserID__571DF1D5");
+                    .WithMany(p => p.AspNetUserClaims)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserLogin>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.ProviderKey).HasMaxLength(128);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserLogins)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.HasIndex(e => e.RoleId, "IX_AspNetUserRoles_RoleId");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserToken>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.Name).HasMaxLength(128);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserTokens)
+                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<GroceryList>(entity =>
             {
-                entity.HasKey(e => e.ListItem)
-                    .HasName("PK__Grocery___6A960799ED96A90F");
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__Grocery___1788CCAC4463BA49");
 
                 entity.ToTable("Grocery_List");
 
-                entity.Property(e => e.ListItem).HasMaxLength(80);
-
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.GroceryLists)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Grocery_L__UserI__4F7CD00D");
+                entity.Property(e => e.ListItem).HasMaxLength(80);
+
+                entity.Property(e => e.UserName).HasMaxLength(80);
             });
 
             modelBuilder.Entity<Ingredient>(entity =>
@@ -80,39 +161,6 @@ namespace Sous_Cloud_Pantry_V2.models
                 entity.Property(e => e.MeasurementId).HasColumnName("measurementID");
 
                 entity.Property(e => e.UserName).HasMaxLength(80);
-
-                entity.HasOne(d => d.Measurement)
-                    .WithMany(p => p.Ingredients)
-                    .HasForeignKey(d => d.MeasurementId)
-                    .HasConstraintName("FK__Ingredien__measu__02FC7413");
-            });
-
-            modelBuilder.Entity<Measurement>(entity =>
-            {
-                entity.Property(e => e.MeasurementId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("measurementID");
-
-                entity.Property(e => e.MeasurementMethod)
-                    .HasMaxLength(40)
-                    .HasColumnName("measurementMethod");
-            });
-
-            modelBuilder.Entity<Pantry>(entity =>
-            {
-                entity.HasKey(e => e.PantryLocation)
-                    .HasName("PK__Pantry__5BD4FA581DF20CDE");
-
-                entity.ToTable("Pantry");
-
-                entity.Property(e => e.PantryLocation).HasMaxLength(40);
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Pantries)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Pantry__UserID__5535A963");
             });
 
             modelBuilder.Entity<Recipe>(entity =>
@@ -125,28 +173,7 @@ namespace Sous_Cloud_Pantry_V2.models
 
                 entity.Property(e => e.Title).HasMaxLength(40);
 
-                entity.HasOne(d => d.IngredientListNavigation)
-                    .WithMany(p => p.Recipes)
-                    .HasForeignKey(d => d.IngredientList)
-                    .HasConstraintName("FK__Recipes__Ingredi__52593CB8");
-            });
-
-            modelBuilder.Entity<UserTable>(entity =>
-            {
-                entity.HasKey(e => e.UserId)
-                    .HasName("PK__UserTabl__1788CCAC312D29A2");
-
-                entity.ToTable("UserTable");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.Property(e => e.EmailAddress).HasMaxLength(40);
-
-                entity.Property(e => e.UserName).HasMaxLength(40);
-
-                entity.Property(e => e.UserPw)
-                    .HasMaxLength(40)
-                    .HasColumnName("User_PW");
+                entity.Property(e => e.UserName).HasMaxLength(80);
             });
 
             OnModelCreatingPartial(modelBuilder);

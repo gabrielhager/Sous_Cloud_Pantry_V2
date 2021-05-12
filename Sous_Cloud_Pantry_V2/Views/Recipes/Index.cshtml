@@ -1,4 +1,52 @@
-﻿@model IEnumerable<Sous_Cloud_Pantry_V2.models.Recipe>
+﻿@*@model IEnumerable<Sous_Cloud_Pantry_V2.models.Recipe>
+
+    @{
+        ViewData["Title"] = "Index";
+    }
+
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IngredientList)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RecipeId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.RecipeId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RecipeId">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
+
+@model IEnumerable<Sous_Cloud_Pantry_V2.models.Recipe>
 
 @{
     ViewData["Title"] = "My Menu";
@@ -7,11 +55,12 @@
 <h1>My Menu</h1>
 
 <p>
-   <center> <a asp-action="Create">Create New</a> </center> 
+    <center> <a asp-action="Create">Create New</a> </center>
 </p>
 <table class="table">
-    
-@foreach (var item in Model.Select(r => new { r.Title }).Distinct()) {
+
+    @foreach (var item in Model.Select(r => new { r.Title }).Distinct())
+    {
         <tr>
             <div class="card shadow col-xs-6 col-sm-5 col-md-4 col-lg-3" style="margin: auto">
                 <p class="card-header" style="margin: auto">
@@ -23,5 +72,5 @@
             </div>
             <p></p>
         </tr>
-}
+    }
 </table>

@@ -12,7 +12,5 @@ namespace Sous_Cloud_Pantry_V2.models
         public int? MeasurementId { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public string UserName { get; set; }
-
-        public virtual Measurement Measurement { get; set; }
     }
 }

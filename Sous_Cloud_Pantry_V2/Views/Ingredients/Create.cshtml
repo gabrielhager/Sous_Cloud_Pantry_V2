@@ -4,31 +4,26 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Add</h1>
 
-<h4>Ingredient</h4>
+<h4>Item to My Pantry</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IngredientName" class="control-label"></label>
+                <label asp-for="IngredientName" class="control-label">Item Name</label>
                 <input asp-for="IngredientName" class="form-control" />
                 <span asp-validation-for="IngredientName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MeasurementId" class="control-label"></label>
-                <select asp-for="MeasurementId" class ="form-control" asp-items="ViewBag.MeasurementId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="ExpiryDate" class="control-label"></label>
-                <input asp-for="ExpiryDate" class="form-control" />
+                <input type="date" asp-for="ExpiryDate" class="form-control" />
                 <span asp-validation-for="ExpiryDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input type="hidden" asp-for="UserName" class="form-control" value="@User.Identity.Name" readonly />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,3 +40,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

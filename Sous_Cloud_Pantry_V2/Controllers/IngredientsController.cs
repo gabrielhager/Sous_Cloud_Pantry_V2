@@ -23,14 +23,12 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // GET: Ingredients
         public async Task<IActionResult> Index()
         {
-            //var sousKitchenPantryDBContext = _context.Ingredients.Include(i => i.Measurement);
-
-            var sousKitchen2 = from u in _context.Ingredients
+            var currentUser = from u in _context.Ingredients
                                where u.UserName == User.Identity.Name
                                select u;
 
-            //return View(await sousKitchenPantryDBContext.ToListAsync());
-            return View(await sousKitchen2.ToListAsync());
+            return View(await currentUser.ToListAsync());
+            //return View(await _context.Ingredients.ToListAsync());
         }
 
         // GET: Ingredients/Details/5
@@ -42,7 +40,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             }
 
             var ingredient = await _context.Ingredients
-                .Include(i => i.Measurement)
                 .FirstOrDefaultAsync(m => m.IngredientId == id);
             if (ingredient == null)
             {
@@ -55,7 +52,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
         // GET: Ingredients/Create
         public IActionResult Create()
         {
-            ViewData["MeasurementId"] = new SelectList(_context.Measurements, "MeasurementId", "MeasurementId");
             return View();
         }
 
@@ -72,7 +68,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MeasurementId"] = new SelectList(_context.Measurements, "MeasurementId", "MeasurementId", ingredient.MeasurementId);
             return View(ingredient);
         }
 
@@ -89,7 +84,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             {
                 return NotFound();
             }
-            ViewData["MeasurementId"] = new SelectList(_context.Measurements, "MeasurementId", "MeasurementId", ingredient.MeasurementId);
             return View(ingredient);
         }
 
@@ -125,7 +119,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MeasurementId"] = new SelectList(_context.Measurements, "MeasurementId", "MeasurementId", ingredient.MeasurementId);
             return View(ingredient);
         }
 
@@ -138,7 +131,6 @@ namespace Sous_Cloud_Pantry_V2.Controllers
             }
 
             var ingredient = await _context.Ingredients
-                .Include(i => i.Measurement)
                 .FirstOrDefaultAsync(m => m.IngredientId == id);
             if (ingredient == null)
             {
