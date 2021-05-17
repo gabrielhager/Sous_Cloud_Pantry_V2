@@ -1,4 +1,5 @@
 # Sous: Cloud Pantry Manger 
+### 🌀 The App is now live! Check it out [here](https://souspantry.azurewebsites.net) 🌀
 ## [Table of Contents](#table-of-contents)
 1) [Concept](#Concept)
 2) [Entity Relationship Diagram](#Entity-Relationship-Diagram)
@@ -11,6 +12,7 @@
 9) [Recipe Book](#Recipe-Book)
 10) [Requirements List](#Requirements-List)
 11) [Test Table](#Test-Table)
+12) [Test Status Report](#Test-Status-Report)
 
 # <a name="Concept"></a>
 #### <div alignt="Left"> Concept</div> [Return to Table of Contents](#table-of-contents)
@@ -93,14 +95,23 @@ Many families struggle with wasteful grocery shopping habits and have kitchen pa
 
 | Test ID | Requirement ID | Test Procedure                                                                                                                                                                      | Status     | Time Stamp |
 |---------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------|
-| 1       | 1.0.0          | User attempts to login with a valid username/password and gains access to their inventory                                                                                           | Not Tested |  |
-| 2       | 2.0.0          | Upon creating a new account, click the "Create Pantry" button to gain access to a new Pantry Inventory                                                                              | Not Tested |  |
-| 3       | 2.1.0 , 2.1.1  | (Unit Test) Auto populate the Pantry Inventory with "Black Beans" and perfom an Assert Test                                                                                         | Not Tested |  |
-| 4       | 2.1.2          | (Unit Test) Auto populate the "Black Beans" item with an Expiry date of 1900-01-01, isExpired() should return true.                                                                 | Not Tested |  |
-| 5       | 2.2.0          | In the Pantry Inventory page, the "add item" button allows users to add Pantry Items, the items appear in the Pantry when the user clicks "confirm"                                 | Not Tested |  |
-| 6       | 2.3.0          | In the Pantry Inventory page, the "add location" button allows users to add location, the new location appears in the Pantry when the user clicks "confirm"                         | Not Tested |  |
+| 1       | 1.0.0          | ✅ User attempts to login with a valid username/password and gains access to their inventory                                                                                           | Passed Test  | 16 May |
+| 2       | 2.0.0          | ✅ Upon creating a new account, click the "Create Pantry" button to gain access to a new Pantry Inventory                                                                              | Passed Test | 16 May  |
+| 3       | 2.1.0 , 2.1.1  | 🔄 (Unit Test) Auto populate the Pantry Inventory with "Black Beans" and perfom an Assert Test                                                                                         | Creating Test | 16 May |
+| 4       | 2.1.2          | 🔄 (Unit Test) Auto populate the "Black Beans" item with an Expiry date of 1900-01-01, isExpired() should return true.                                                                 | Creating Test | 16 May  |
+| 5       | 2.2.0          | ✅ In the Pantry Inventory page, the "add item" button allows users to add Pantry Items, the items appear in the Pantry when the user clicks "confirm"                                 | Passed Test | 16 May  |
+| 6       | 2.3.0          | ❌ In the Pantry Inventory page, the "add location" button allows users to add location, the new location appears in the Pantry when the user clicks "confirm"                         | Test Removed | 16 May |
 | 7       | 3.0.0, 4.0.0, 5.0.0  | (Inspection) The user is able to view the Grocery Shopping List, Menu, and Meal Calendar                                                                                      | Not Tested |  |
 | 8       | 3.1.0          | (Demonstration) Items are added to the Grocery Shopping List and are removed when the user clicks "done shopping"                                                                   | Not Tested |  |
 | 9       | 4.1.0          | The user clicks "add menu item" and all ingredients are added to the Grocery Shopping List                                                                                          | Not Tested |  |
-| 10      | 5.1.0          | In the Meal Calendar, the user clicks on a day and is able to add a meal with the "schedule meal" button                                                                            | Not Tested |  |
-| 11      | 5.2.0          | The user is notified when a meal is complete, upon clicking "verify" the Menu Item ingredients are removed from the pantry inventory   | Not Tested |  
+| 10      | 5.1.0          | ❌ In the Meal Calendar, the user clicks on a day and is able to add a meal with the "schedule meal" button                                                                            | Test Removed | 16 May  |
+| 11      | 5.2.0          | ❌ The user is notified when a meal is complete, upon clicking "verify" the Menu Item ingredients are removed from the pantry inventory   | Test Removed | 16 May
+
+# <a name="Test-Status-Report"></a>
+#### <div align="Left"> Test Status Report</div>  [Return to Table of Contents](#table-of-contents)
+#### 🔹Percent of requirements (currently) covered by tests?
+### 5 / 7 = 71.4%
+#### 🔹Percent of tests cases currently passing?
+### 3 / 7 = 42.8%
+#### 🔹What level of validation could be expected after Verification?
+### 7 / 7 = 100%
