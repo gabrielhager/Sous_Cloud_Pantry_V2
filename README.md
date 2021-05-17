@@ -94,7 +94,7 @@ Many families struggle with wasteful grocery shopping habits and have kitchen pa
 
 | Test ID | Requirement ID | Test Procedure                                                                                                                                                                      | Status     | Time Stamp |
 |---------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------|
-| 1       | 1.0.0          | User attempts to login with a valid username/password and gains access to their inventory                                                                                           | Not Tested |  |
+| 1       | 1.0.0          | ✅ User attempts to login with a valid username/password and gains access to their inventory                                                                                           | Passed Test  |  |
 | 2       | 2.0.0          | Upon creating a new account, click the "Create Pantry" button to gain access to a new Pantry Inventory                                                                              | Not Tested |  |
 | 3       | 2.1.0 , 2.1.1  | (Unit Test) Auto populate the Pantry Inventory with "Black Beans" and perfom an Assert Test                                                                                         | Not Tested |  |
 | 4       | 2.1.2          | (Unit Test) Auto populate the "Black Beans" item with an Expiry date of 1900-01-01, isExpired() should return true.                                                                 | Not Tested |  |
