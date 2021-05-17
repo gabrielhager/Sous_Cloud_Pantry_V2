@@ -1,12 +1,12 @@
 ﻿@model Sous_Cloud_Pantry_V2.models.Recipe
 
 @{
-    ViewData["Title"] = "Add";
+//ViewData["Title"] = "Add";
 }
 
 <h1>Add to</h1>
 
-<h4>Recipe</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
 
 <div class="row">
@@ -14,8 +14,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input type="hidden" asp-for="Title" class="form-control" value="@ViewData["Title"]" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -10,7 +10,7 @@ using Sous_Cloud_Pantry_V2.models;
 
 namespace Sous_Cloud_Pantry_V2.Controllers
 {
-    [Authorize]
+    
     public class RecipesController : Controller
     {
         private readonly SousKitchenPantryDBContext _context;
@@ -61,9 +61,7 @@ namespace Sous_Cloud_Pantry_V2.Controllers
 
         public IActionResult Add(string id)
         {
-          var currentRecipe = from u in _context.Recipes
-                              where u.Title == id
-                              select u;
+            ViewData["Title"] = id;
 
             return View();
         }
