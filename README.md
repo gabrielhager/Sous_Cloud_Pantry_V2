@@ -12,6 +12,7 @@
 9) [Recipe Book](#Recipe-Book)
 10) [Requirements List](#Requirements-List)
 11) [Test Table](#Test-Table)
+12) [Test Status Report](#Test-Status-Report)
 
 # <a name="Concept"></a>
 #### <div alignt="Left"> Concept</div> [Return to Table of Contents](#table-of-contents)
@@ -105,3 +106,12 @@ Many families struggle with wasteful grocery shopping habits and have kitchen pa
 | 9       | 4.1.0          | The user clicks "add menu item" and all ingredients are added to the Grocery Shopping List                                                                                          | Not Tested |  |
 | 10      | 5.1.0          | ❌ In the Meal Calendar, the user clicks on a day and is able to add a meal with the "schedule meal" button                                                                            | Test Removed | 16 May  |
 | 11      | 5.2.0          | ❌ The user is notified when a meal is complete, upon clicking "verify" the Menu Item ingredients are removed from the pantry inventory   | Test Removed | 16 May
+
+# <a name="Test-Status-Report"></a>
+#### <div align="Left"> Test Status Report</div>  [Return to Table of Contents](#table-of-contents)
+#### 🔹Percent of requirements (currently) covered by tests?
+### 5 / 7 = 71.4%
+#### 🔹Percent of tests cases currently passing?
+### 3 / 7 = 42.8%
+#### 🔹What level of validation could be expected after Verification?
+### 7 / 7 = 100%
