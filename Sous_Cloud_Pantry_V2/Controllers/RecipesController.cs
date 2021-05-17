@@ -10,7 +10,7 @@ using Sous_Cloud_Pantry_V2.models;
 
 namespace Sous_Cloud_Pantry_V2.Controllers
 {
-    
+    [Authorize]
     public class RecipesController : Controller
     {
         private readonly SousKitchenPantryDBContext _context;
