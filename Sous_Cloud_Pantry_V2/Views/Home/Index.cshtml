@@ -2,25 +2,33 @@
     ViewData["Title"] = "Home Page";
 }
 
+<div class="d-inline-flex align-content-start">
+    <img src="~/images/ChefSplash.png" alt="Chef Splash" width="250" height="250" />
+</div>
 <div class="text-center">
     
-    <div class="d-fle vh-50">
-        <img src="~/images/ChefSplash.png" alt="Chef Splash" width="250" height="250" />
-    </div>
-    <div class="d-flex vh-100">
-        <div class="d-flex w-100 justify-content-center align-self-center" column-count: 3 column-rule-style: solid  >
+    <div class="container">
+        <div class="row">
             
-            <div class="d-flex w-100 justify-content-center align-self-center" >
-                <div class="text-md-center">
-                    <a class="btn btn-primary btn-lg btn-block" asp-controller="Ingredients" asp-action="Index">My Pantry</a>
-                </div>
-                <div >
-                    <a class="btn btn-danger btn-lg btn-block" asp-controller="Recipes" asp-action="Index">My Menu</a>
-                </div>
-                <div>
-                    <a class="btn btn-warning btn-lg btn-block" asp-controller="GroceryLists" asp-action="Index">My List</a>
-                </div>
-            </div>
+
+                
+                    <div class="col-sm-4">
+                        <img src="~/images/PantryIcon.png" alt="Pantry Button" width"25%" height="25%"/>
+                        <a class="btn btn-primary btn-lg btn-block" asp-controller="Ingredients" asp-action="Index">My Pantry</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="~/images/MenuIcon.png" alt="Menu Button" width"25%" height="25%" />
+                             
+                        <a class="btn btn-danger btn-lg btn-block" asp-controller="Recipes" asp-action="Index">My Menu</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="~/images/ListIcon.png" alt="List Button" width"25%" height="25%" />
+                             
+                        <a class="btn btn-warning btn-lg btn-block" asp-controller="GroceryLists" asp-action="Index">My List</a>
+                    </div>
+               
+            
         </div>
     </div>
+    
 </div>
