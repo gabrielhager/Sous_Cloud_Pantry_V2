@@ -1,4 +1,5 @@
 # Sous: Cloud Pantry Manger 
+### 🌀 The App is now live! Check it out [here](https://souspantry.azurewebsites.net) 🌀
 ## [Table of Contents](#table-of-contents)
 1) [Concept](#Concept)
 2) [Entity Relationship Diagram](#Entity-Relationship-Diagram)
