@@ -12,9 +12,7 @@
          class="d-inline-block align-top" />
 </h1>
 
-<p>
-    <center> <a asp-action="Create">Create New</a> </center>
-</p>
+
 <table class="table">
 
     @foreach (var item in Model.Select(r => new { r.Title }).Distinct())
@@ -32,3 +30,6 @@
         </tr>
     }
 </table>
+<p>
+    <center> <a class="btn btn-primary" asp-action="Create">Create New</a> </center>
+</p>
